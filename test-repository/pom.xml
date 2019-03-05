@@ -75,7 +75,7 @@
 
                 <!-- 插件传参 -->
                 <configuration>
-                    <prefix>----------------</prefix>
+                    <prefix>-------prefix---------</prefix>
                 </configuration>
 
                 <!-- 插件目标和maven生命周期阶段绑定，可以一个阶段绑定多个目标，也可一个目标定义到多个阶段 -->
@@ -85,6 +85,13 @@
                         <phase>clean</phase>
                         <goals>
                             <goal>helloPlugin</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>buildInfo1</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>buildinfo</goal>
                         </goals>
                     </execution>
 
