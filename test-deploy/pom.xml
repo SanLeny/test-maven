@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.1.3.RELEASE</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+
+    <groupId>cn.sanleny</groupId>
+    <artifactId>test-deploy</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>war</packaging>
+
+    <properties>
+        <java.version>1.8</java.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <finalName>test-deploy</finalName>
+        <plugins>
+            <!-- cargo是一个专门启动servlet容器（jboss,weblogic,tomcat..）的组织 -->
+            <plugin>
+                <groupId>org.codehaus.cargo</groupId>
+                <artifactId>cargo-maven2-plugin</artifactId>
+                <version>1.7.2</version>
+                <!-- 针对插件进行配置 -->
+                <configuration>
+                    <!-- 配置当前系统中容器的位置 -->
+                    <container>
+                        <containerId>tomcat9x</containerId>
+                        <home>F:\local\tomcat\apache-tomcat-9.0.14</home>
+                    </container>
+                    <configuration>
+                        <type>existing</type>
+                        <home>F:\local\tomcat\apache-tomcat-9.0.14</home>
+                        <!-- 如果Tomcat端口为默认值8080则不必设置该属性 -->
+                        <properties>
+                            <cargo.servlet.port>8081</cargo.servlet.port>
+                        </properties>
+                    </configuration>
+                </configuration>
+                <!-- 配置插件在什么情况下执行 -->
+                <executions>
+                    <execution>
+                        <id>cargo-run</id>
+                        <!-- 生命周期的阶段 -->
+                        <phase>install</phase>
+                        <goals>
+                            <!-- 插件的目标 -->
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
